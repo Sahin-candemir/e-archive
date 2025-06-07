@@ -1,0 +1,46 @@
+/* app.css */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 144px);
+  position: relative;
+}
+
+.sidebar {
+  width: 300px;
+  border-right: 1px solid #ccc;
+  background-color: rgb(221, 220, 225);
+  overflow-y: auto;
+  padding-top: 32px;
+  padding-bottom: 80px;
+}
+
+.resizer {
+  width: 5px;
+  cursor: col-resize;
+  background-color: #eee;
+}
+
+.main-content {
+  margin-left: 0;
+  flex-grow: 1;
+  padding-top: 64px;
+  padding-bottom: 80px;
+  overflow-y: auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+}
+.pagination-buttons{
+    margin-top: auto;
+    padding-bottom: 20px;
+}

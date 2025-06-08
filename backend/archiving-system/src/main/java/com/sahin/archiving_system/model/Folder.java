@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Folder {
@@ -27,15 +28,38 @@ public class Folder {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<File> files;
     public Folder() {
     }
 
-    public Folder(Long id, String name, Folder parent, List<Folder> children, LocalDateTime createdAt) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<File> files) {
+        this.files = files;
+    }
+
+    public Folder(Long id, String name, Folder parent, List<Folder> children, LocalDateTime createdAt, User user, Set<File> files) {
         this.id = id;
         this.name = name;
         this.parent = parent;
         this.children = children;
         this.createdAt = createdAt;
+        this.user = user;
+        this.files = files;
     }
 
     public Long getId() {

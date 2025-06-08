@@ -6,6 +6,7 @@ import com.sahin.archiving_system.dto.FolderDto;
 import com.sahin.archiving_system.mapper.FolderMapper;
 import com.sahin.archiving_system.model.File;
 import com.sahin.archiving_system.model.Folder;
+import com.sahin.archiving_system.model.User;
 import com.sahin.archiving_system.repository.FileRepository;
 import com.sahin.archiving_system.repository.FolderRepository;
 import com.sahin.archiving_system.service.FileService;
@@ -13,6 +14,7 @@ import com.sahin.archiving_system.service.FolderService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,6 +75,11 @@ public class FolderServiceImpl implements FolderService {
         List<FileDto> filesDTO = files.stream().map(f -> new FileDto(f.getId(),f.getName(),f.getType())).collect(Collectors.toList());
 
         return new FolderContentDto(foldersDTO, filesDTO);
+    }
+
+    @Override
+    public Optional<Folder> getFolderByFolderIdAndUser(Long id, User currentUser) {
+        return folderRepository.findByIdAndUser(id, currentUser);
     }
 
     public FolderServiceImpl(FolderRepository folderRepository, FileRepository fileRepository, FolderMapper folderMapper) {

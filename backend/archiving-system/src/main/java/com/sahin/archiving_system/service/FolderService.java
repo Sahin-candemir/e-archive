@@ -3,8 +3,10 @@ package com.sahin.archiving_system.service;
 import com.sahin.archiving_system.dto.FolderContentDto;
 import com.sahin.archiving_system.dto.FolderDto;
 import com.sahin.archiving_system.model.Folder;
+import com.sahin.archiving_system.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FolderService {
 
@@ -18,4 +20,6 @@ public interface FolderService {
 
     List<FolderDto> findByParentIsNull();
     FolderContentDto findSubFoldersAndFiles(Long id);
+
+    Optional<Folder> getFolderByFolderIdAndUser(Long folderId, User currentUser);
 }

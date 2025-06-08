@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -26,16 +27,41 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private LocalDateTime updatedDate;
 
-    public User(Long id, String fullName, String email, String password, LocalDateTime createdDate, LocalDateTime updatedDate) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Folder> folders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<File> files;
+
+    public Set<Folder> getFolders() {
+        return folders;
+    }
+
+    public void setFolders(Set<Folder> folders) {
+        this.folders = folders;
+    }
+
+    public Set<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<File> files) {
+        this.files = files;
+    }
+
+    public User(Long id, String fullName, String email, String password, LocalDateTime createdDate, LocalDateTime updatedDate, Set<Folder> folders, Set<File> files) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
+        this.folders = folders;
+        this.files = files;
     }
 
     public User() {
+
     }
 
     public Long getId() {

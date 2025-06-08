@@ -27,6 +27,9 @@ public class File {
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     public Folder getFolder() {
         return folder;
     }
@@ -47,13 +50,22 @@ public class File {
 
     }
 
-    public File(String name, Long id, String type, byte[] data, String folderPath, LocalDateTime createdAt, Folder folder) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public File(String name, Long id, String type, byte[] data, String folderPath, LocalDateTime createdAt, Folder folder, User user) {
         this.name = name;
         this.id = id;
         this.type = type;
         this.data = data;
         this.folder = folder;
         this.createdAt = createdAt;
+        this.user = user;
     }
 
     public String getName() {

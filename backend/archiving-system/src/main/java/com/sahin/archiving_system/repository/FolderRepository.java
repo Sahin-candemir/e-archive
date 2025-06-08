@@ -1,6 +1,7 @@
 package com.sahin.archiving_system.repository;
 
 import com.sahin.archiving_system.model.Folder;
+import com.sahin.archiving_system.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface FolderRepository extends JpaRepository<Folder, Long> {
     boolean existsByParentId(Long parentId);
 
     List<Folder> findByParentIsNull();
+
+    Optional<Folder> findByIdAndUser(Long id, User currentUser);
 }

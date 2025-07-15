@@ -4,20 +4,9 @@ import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTheme } from '@mui/material/styles';
-import {
-  Description as TextFileIcon,
-  PictureAsPdf as PdfFileIcon,
-  Article as DocFileIcon,
-  InsertDriveFile as DefaultFileIcon
-} from '@mui/icons-material';
-import {
-  Box,
-  Typography,
-  CircularProgress,
-  IconButton,
-  Menu,
-  MenuItem,
-} from '@mui/material';
+import ShareFile from './ShareFile';
+import {Description as TextFileIcon,PictureAsPdf as PdfFileIcon,Article as DocFileIcon,InsertDriveFile as DefaultFileIcon} from '@mui/icons-material';
+import {Box,Typography,CircularProgress,IconButton,Menu,MenuItem,} from '@mui/material';
 import { getFileIcon } from './TreeUtils';
 
 export default function TreeItemRenderer({
@@ -29,7 +18,7 @@ export default function TreeItemRenderer({
 }) {
   const [menuAnchor, setMenuAnchor] = React.useState(null);
   const [selectedFileId, setSelectedFileId] = React.useState(null);
-
+  const [shareFileOpen, setShareFileOpen] = React.useState(false);
   const getFileIcon = (fileName) => {
   const extension = fileName.split('.').pop()?.toLowerCase();
   switch (extension) {
@@ -53,7 +42,7 @@ export default function TreeItemRenderer({
 
   const handleMenuClose = () => {
     setMenuAnchor(null);
-    setSelectedFileId(null);
+    //setSelectedFileId(null);
   };
 
   const handleDelete = () => {
@@ -67,6 +56,11 @@ export default function TreeItemRenderer({
     if (selectedFileId && onFileOpen) {
       onFileOpen(selectedFileId);
     }
+    handleMenuClose();
+  };
+  const handleShare = () => {
+    console.log("file : id", selectedFileId);
+    setShareFileOpen(true);
     handleMenuClose();
   };
 
@@ -123,7 +117,14 @@ export default function TreeItemRenderer({
       >
         <MenuItem onClick={handleOpen}>Aç</MenuItem>
         <MenuItem onClick={handleDelete}>Sil</MenuItem>
+        <MenuItem onClick={handleShare}>Gönder</MenuItem>
       </Menu>
+
+      <ShareFile
+        open={shareFileOpen}
+        onClose={() => setShareFileOpen(false)}
+        fileId={selectedFileId}
+      />
     </>
   );
 }

@@ -186,7 +186,18 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 1 }}>
+    <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 1,
+      padding: 2,
+      height: '100%',
+      background: 'linear-gradient(135deg,rgb(85, 85, 146) 0%, #2b2b3c 100%)',
+      color: 'white',
+      overflowY: 'auto',
+    }}
+  >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <TextField
           size="small"
@@ -211,7 +222,14 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
           expandIcon: ChevronRightIcon,
           collapseIcon: ExpandMoreIcon,
         }}
-        sx={{ flex: 1, backgroundColor: 'rgb(240, 240, 240)', }}
+        sx={{
+  flex: 1,
+  backgroundColor: 'transparent',
+  color: 'white',
+  '& .MuiTreeItem-label': {
+    color: 'white',
+  },
+}}
       >
         <TreeItemRenderer
           nodes={treeData}

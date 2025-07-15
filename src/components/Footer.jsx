@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Link } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 function Footer() {
   return (
@@ -11,8 +12,33 @@ function Footer() {
         textAlign: 'center',
       }}
     >
-      <Typography variant="body2" color="textSecondary">
-        © {new Date().getFullYear()} Dosya Uygulaması – Tüm hakları saklıdır.
+      <Typography
+        variant="body2"
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}
+      >
+        © {new Date().getFullYear()} Tüm hakları saklıdır |
+
+        <GitHubIcon fontSize="small" />
+        <Link
+          href="https://github.com/Sahin-candemir/e-archive-frontend"
+          target="_blank"
+          rel="noopener noreferrer"
+          underline="hover"
+          color="inherit"
+        >
+          Frontend Kodu
+        </Link>
+
+        <GitHubIcon fontSize="small" />
+        <Link
+          href="https://github.com/Sahin-candemir/e-archive-backend"
+          target="_blank"
+          rel="noopener noreferrer"
+          underline="hover"
+          color="inherit"
+        >
+          Backend Kodu
+        </Link>
       </Typography>
     </Box>
   );

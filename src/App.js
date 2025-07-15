@@ -83,7 +83,7 @@ function App() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh',paddingTop: '1px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '1px' }}>
       <Navbar
         onShowUpload={handleOpenUploadModal}
         onShowLogin={() => { setShowLogin(true); setShowSignup(false); }}
@@ -93,80 +93,138 @@ function App() {
         userFullName={userFullName}
       />
 
-      <ResizablePanels
-        sx={{ flexGrow: 1, paddingTop: '64px', maxHeight: 'calc(100vh - 64px)' }}
-        leftPanel={
-          isLoggedIn ? (
+      {isLoggedIn && (
+        <ResizablePanels
+          sx={{ flexGrow: 1, paddingTop: '64px', maxHeight: 'calc(100vh - 64px)' }}
+          leftPanel={
             <FileExplorer
               onOpenFileContent={handleOpenFileContent}
               onSelectFolder={handleSelectFolder}
             />
-          ) : (
-            <Typography variant="h6" sx={{ mt: 2, textAlign: 'center' }}>
-              Giriş Yaparak veya Üye Olularak Dosya Yöneticisine Erişin.
-            </Typography>
-          )
-        }
-        rightPanel={
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              background: `linear-gradient(135deg, ${theme.palette.primary.main} 10%, ${theme.palette.secondary.dark} 100%)`,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            {showLogin && (
-              <LoginComponent
-                onLoginSuccess={handleLoginSuccess}
-                onClose={() => setShowLogin(false)}
-              />
-            )}
-            {showSignup && (
-              <SignupComponent
-                onSignupSuccess={handleSignupSuccess}
-                onClose={() => setShowSignup(false)}
-              />
-            )}
-            {!isLoggedIn && !showLogin && !showSignup && (
-              <WelcomePage
-                onShowLogin={() => { setShowLogin(true); setShowSignup(false); }}
-                onShowSignup={() => { setShowSignup(true); setShowLogin(false); }}
-              />
-            )}
-            {isLoggedIn && openedFile.fileName && (
-              <FileViewer fileName={openedFile.fileName} content={openedFile.content} />
-            )}
-            {isLoggedIn && !openedFile.fileName && !showUploadModal && (
-              <Typography variant="h6" sx={{ textAlign: 'center' }}>
-                Sol taraftaki dosya gezgininden bir dosya seçin veya yeni bir dosya yükleyin.
-              </Typography>
-            )}
-          </Box>
-        }
-      />
-      <Footer/>
+          }
+          rightPanel={
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 10%, ${theme.palette.secondary.dark} 100%)`,
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              {openedFile.fileName ? (
+                <FileViewer fileName={openedFile.fileName} content={openedFile.content} />
+              ) : (
+                <Box
+  sx={{
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  }}
+>
+  <Box
+    sx={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundImage: 'url("/background.jpg")',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      opacity: 0.55,
+      zIndex: 0,
+    }}
+  />
+
+  <Box
+    sx={{
+      position: 'relative',
+      zIndex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+      textAlign: 'center',
+      color: '#fff',
+      padding: 4,
+    }}
+  >
+                  <Box sx={{ fontSize: 64, mb: 2 }}>📂</Box>
+                  <Typography variant="h5" gutterBottom>
+                    Henüz bir dosya seçmediniz
+                  </Typography>
+                  <Typography variant="body1">
+                    Sol taraftaki dosya gezgininden bir dosya seçin veya yukarıdan yeni bir dosya yükleyin.
+                  </Typography>
+                </Box>
+                </Box>
+              )}
+            </Box>
+          }
+        />
+      )}
+
+      {!isLoggedIn && (
+        <Box
+          sx={{
+            flexGrow: 1,
+            paddingTop: '64px',
+            background: `linear-gradient(135deg, ${theme.palette.primary.main} 10%, ${theme.palette.secondary.dark} 100%)`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {showLogin && (
+            <LoginComponent
+              onLoginSuccess={handleLoginSuccess}
+              onClose={() => setShowLogin(false)}
+            />
+          )}
+          {showSignup && (
+            <SignupComponent
+              onSignupSuccess={handleSignupSuccess}
+              onClose={() => setShowSignup(false)}
+            />
+          )}
+          {!showLogin && !showSignup && (
+            <WelcomePage
+              onShowLogin={() => { setShowLogin(true); setShowSignup(false); }}
+              onShowSignup={() => { setShowSignup(true); setShowLogin(false); }}
+            />
+          )}
+        </Box>
+
+      )}
+
+      <Footer />
       {isLoggedIn && (
         <Dialog open={showUploadModal} onClose={handleCloseUploadModal} fullWidth maxWidth="sm">
-    <DialogTitle>
-      Dosya Yükle
-      <IconButton
-        aria-label="close"
-        onClick={handleCloseUploadModal}
-        sx={{ position: 'absolute', right: 8, top: 8 }}
-      >
-        <CloseIcon />
-      </IconButton>
-    </DialogTitle>
-    <DialogContent dividers>
-      <FileUploadPage
-        folderId={selectedFolderId}
-        onUploadSuccess={handleUploadSuccessAndCloseModal}
-      />
-    </DialogContent>
-  </Dialog>
+          <DialogTitle>
+            Dosya Yükle
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseUploadModal}
+              sx={{ position: 'absolute', right: 8, top: 8 }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent dividers>
+            <FileUploadPage
+              folderId={selectedFolderId}
+              onUploadSuccess={handleUploadSuccessAndCloseModal}
+            />
+          </DialogContent>
+        </Dialog>
       )}
     </Box>
   );

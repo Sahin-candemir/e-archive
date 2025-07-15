@@ -55,19 +55,20 @@ export default function FileViewer({ fileName, content }) {
   }
 
   return (
-    <Paper sx={{ p: 2, mt: 2 }}>
+    <Paper sx={{ p: 2, mt: 2, flexGrow: 1, display: 'flex', flexDirection: 'column' }}> {/* flexGrow ve flexDirection eklendi */}
       <Typography variant="h6">{fileName}</Typography>
       <Box
-        sx={{
-          whiteSpace: 'pre-wrap',
-          backgroundColor: '#f5f5f5',
-          p: 1,
-          mt: 1,
-          borderRadius: 1,
-          maxHeight: '400px',
-          overflow: 'auto',
-        }}
-      >
+  sx={{
+    whiteSpace: 'pre-wrap',
+    backgroundColor: '#f5f5f5',
+    p: 1,
+    mt: 2,
+    borderRadius: 1,
+    flexGrow: 1,
+    maxHeight: 'calc(100vh - 74px)',
+    overflow: 'auto',
+  }}
+>
         {content}
       </Box>
     </Paper>

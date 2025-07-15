@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, TextField } from '@mui/material';
 import axios from 'axios';
-import '../config/axiosConfig';
+import { API_BASE_URL } from '../api/apiConfig';
 
 export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
   const [treeData, setTreeData] = useState([]);
@@ -28,14 +28,14 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
       const fileExtension = fileName.split('.').pop().toLowerCase();
 
       if (fileExtension === 'pdf') {
-        const response = await axios.get(`/api/files/download/${fileName}`, { responseType: 'blob' });
+        const response = await axios.get(`${API_BASE_URL}/files/download/${fileName}`, { responseType: 'blob' });
         onOpenFileContent(fileName, response.data);
       } else if (fileExtension === 'txt') {
-        const response = await axios.get(`/api/files/download/${fileName}`, { responseType: 'blob' });
+        const response = await axios.get(`${API_BASE_URL}/files/download/${fileName}`, { responseType: 'blob' });
         const text = await response.data.text();
         onOpenFileContent(fileName, text);
       } else {
-        const response = await axios.get(`/api/files/download/${fileName}`);
+        const response = await axios.get(`${API_BASE_URL}/files/download/${fileName}`);
         onOpenFileContent(fileName, response.data);
       }
     } catch (error) {
@@ -47,7 +47,7 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
     const fileId = itemId.split('-')[1];
     const fileName = findLabelById(treeData, itemId);
     try {
-      await axios.delete(`/api/files/${fileName}`, {
+      await axios.delete(`${API_BASE_URL}/files/${fileName}`, {
         data: { id: fileId }
       });
       setTreeData((prev) => removeItemById(prev, itemId));
@@ -93,7 +93,7 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
     const originalFolderId = itemIdWithPrefix.split('-')[1];
     setLoadingItems((prev) => new Set(prev).add(itemIdWithPrefix));
     try {
-      const res = await axios.get(`/api/folders/subfolders/${originalFolderId}`);
+      const res = await axios.get(`${API_BASE_URL}/folders/subfolders/${originalFolderId}`);
       const data = res.data;
       setTreeData((prevTree) =>
         addSubItemsToTree(prevTree, itemIdWithPrefix, data.folders || [], data.files || [])
@@ -112,7 +112,7 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
 
   const loadRootFolders = async () => {
     try {
-      const res = await axios.get('/api/folders/parentfolders');
+      const res = await axios.get(`${API_BASE_URL}/folders/parentfolders`);
       const folders = res.data.map((f) => ({
         itemId: `folder-${f.id}`,
         label: f.name,
@@ -148,7 +148,7 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
     }
 
     try {
-      const res = await axios.post('/api/folders', { name: newFolderName, parentId });
+      const res = await axios.post(`${API_BASE_URL}/folders`, { name: newFolderName, parentId });
       const newFolder = res.data;
 
       const newFolderItem = {
@@ -177,7 +177,7 @@ export default function FileExplorer({ onOpenFileContent, onSelectFolder }) {
     }
     const folderId = selectedItem.split('-')[1];
     try {
-      await axios.delete(`/api/folders/${folderId}`);
+      await axios.delete(`${API_BASE_URL}/folders/${folderId}`);
       setTreeData((prev) => removeItemById(prev, selectedItem));
       setSelectedItem(null);
     } catch (err) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Link } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import '../api/apiConfig';
 
 function Footer() {
   return (

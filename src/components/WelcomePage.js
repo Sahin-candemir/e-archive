@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import { useTheme } from '@mui/material/styles';
+import '../api/apiConfig';
 
 function WelcomePage({ onShowLogin, onShowSignup }) {
   const theme = useTheme();
@@ -31,7 +32,7 @@ function WelcomePage({ onShowLogin, onShowSignup }) {
         }
       }}
     >
-      <FolderOpenIcon sx={{ fontSize: 80, color: theme.palette.primary.main, mb: 3 }} /> {/* Büyük bir ikon */}
+      <FolderOpenIcon sx={{ fontSize: 80, color: theme.palette.primary.main, mb: 3 }} />
       <Typography variant="h4" component="h1" gutterBottom sx={{ color: theme.palette.text.primary }}>
         e-Archive Projesine Hoş Geldiniz!
       </Typography>

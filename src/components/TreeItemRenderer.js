@@ -8,6 +8,7 @@ import ShareFile from './ShareFile';
 import {Description as TextFileIcon,PictureAsPdf as PdfFileIcon,Article as DocFileIcon,InsertDriveFile as DefaultFileIcon} from '@mui/icons-material';
 import {Box,Typography,CircularProgress,IconButton,Menu,MenuItem,} from '@mui/material';
 import { getFileIcon } from './TreeUtils';
+import '../api/apiConfig';
 
 export default function TreeItemRenderer({
   nodes,

@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Box } from '@mui/material';
+import '../api/apiConfig';
+
 export default function ResizablePanels({ leftPanel, rightPanel, initialLeftWidth = 300, sx }) {
   const [leftWidth, setLeftWidth] = useState(initialLeftWidth);
   const isResizing = useRef(false);

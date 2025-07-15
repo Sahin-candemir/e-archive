@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import { useState, useEffect } from 'react';
-
+import '../api/apiConfig';
 export default function FileViewer({ fileName, content }) {
   const [pdfUrl, setPdfUrl] = useState(null);
 
@@ -55,7 +55,7 @@ export default function FileViewer({ fileName, content }) {
   }
 
   return (
-    <Paper sx={{ p: 2, mt: 2, flexGrow: 1, display: 'flex', flexDirection: 'column' }}> {/* flexGrow ve flexDirection eklendi */}
+    <Paper sx={{ p: 2, mt: 2, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h6">{fileName}</Typography>
       <Box
   sx={{

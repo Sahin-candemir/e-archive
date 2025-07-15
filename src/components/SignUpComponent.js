@@ -8,6 +8,7 @@ import {
   Alert,
 } from '@mui/material';
 import axios from 'axios';
+import { API_BASE_URL } from '../api/apiConfig';
 
 export default function SignupComponent({ onSignupSuccess, onClose }) {
   const [fullName, setFullName] = useState('');
@@ -22,7 +23,7 @@ export default function SignupComponent({ onSignupSuccess, onClose }) {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/auth/signup', {
+      const response = await axios.post(`${API_BASE_URL}/auth/signup`, {
         fullName,
         email,
         password,

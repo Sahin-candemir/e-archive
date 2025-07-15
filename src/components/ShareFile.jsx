@@ -1,6 +1,7 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../api/apiConfig';
 
 export default function ShareFile({ open, onClose, fileId }) {
   const [receiverEmail, setReceiverEmail] = useState('');
@@ -13,7 +14,7 @@ export default function ShareFile({ open, onClose, fileId }) {
     try {
       setLoading(true);
       let numericFileId = fileId.replace("file-","");
-      await axios.post('/api/share', {
+      await axios.post(`${API_BASE_URL}/share`, {
         fileId:numericFileId,
         senderEmail,
         receiverEmail,

@@ -1,4 +1,6 @@
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import '../api/apiConfig';
+
 
 export const addSubItemsToTree = (nodes, parentId, folders, files) => {
   console.log('addSubItemsToTree çağrıldı:', { parentId, folders, files });

@@ -15,8 +15,9 @@ import {
   ChevronRight as ExpandIcon,
   ExpandMore as CollapseIcon,
 } from '@mui/icons-material';
-import { Box, Typography, CircularProgress, useTheme } from '@mui/material'; // useTheme eklendi
+import { Box, Typography, CircularProgress, useTheme } from '@mui/material';
 import axios from 'axios';
+import '../api/apiConfig';
 
 const getFileIcon = (fileName) => {
   const extension = fileName.split('.').pop()?.toLowerCase();
@@ -74,7 +75,7 @@ const FolderTree = ({ onSelectFile }) => {
 
   const loadRootFolders = async () => {
     try {
-      const res = await axios.get('/api/folders/tree');
+      const res = await axios.get(`${API_BASE_URL}/folders/tree`);
       const folders = res.data.map(folder => ({
         ...folder,
         type: 'folder',
@@ -91,8 +92,8 @@ const FolderTree = ({ onSelectFile }) => {
 
     setLoadingFolders((prev) => new Set(prev).add(node.id));
     try {
-      const subfoldersRes = await axios.get(`/api/folders/subfolders?parentId=${node.id}`);
-      const filesRes = await axios.get(`/api/files/getAll?folderId=${node.id}&page=0&size=100`);
+      const subfoldersRes = await axios.get(`${API_BASE_URL}/folders/subfolders?parentId=${node.id}`);
+      const filesRes = await axios.get(`${API_BASE_URL}/files/getAll?folderId=${node.id}&page=0&size=100`);
 
       const folders = subfoldersRes.data.map(f => ({
         ...f,
@@ -202,7 +203,6 @@ const FolderTree = ({ onSelectFile }) => {
           node.children.length > 0 ? (
             renderTree(node.children)
           ) : (
-            // Boş klasörler için mesaj
             <Typography variant="caption" sx={{ pl: 2, fontStyle: 'italic', color: 'text.secondary' }}>
               Klasör boş
             </Typography>

@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:8083',
+      target: 'https://e-archive-backend-1.onrender.com',
       changeOrigin: true,
     })
   );
